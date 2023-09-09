@@ -15,5 +15,6 @@ namespace SolForms.Data
         Task<int> Count<TEntity>() where TEntity : class;
         Task<bool> Delete<TEntity>(Guid id) where TEntity : class;
         Task<bool> DeleteAll<TEntity>(Guid? id = null) where TEntity : class;
+        Task<bool> IsRedFlag<TEntity>(Guid id) where TEntity : class;
     }
 }

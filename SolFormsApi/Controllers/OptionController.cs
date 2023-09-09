@@ -27,6 +27,11 @@ namespace SolFormsApi.Controllers
         public async Task<Option?[]> GetByQuestionId(Guid questionId) =>
             await _service.GetOptions(questionId);
 
+        [HttpGet("{id:guid}")]
+        public async Task<bool> IsRedFlag(Guid optionId)
+        {
+            return await _service.IsRedFlag(optionId);
+        }
 
         //Post
         [HttpPost]

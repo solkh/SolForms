@@ -41,6 +41,7 @@ namespace SolForms.Services
         //Options
         Task<Option?> GetOption(Guid optionId);
         Task<Option?[]> GetOptions(Guid questionId);
+        Task<bool> IsRedFlag(Guid optionId);
         Task CreateOption(Option option);
         Task UpdateOption(Option option);
         Task UpdateOption(Guid id, Option option);

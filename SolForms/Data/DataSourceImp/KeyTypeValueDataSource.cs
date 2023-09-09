@@ -767,5 +767,11 @@ namespace SolForms.Data.DataSourceImp
             return false;
         }
         #endregion
+
+        //TODO : Complete this
+        public Task<bool> IsRedFlag<TEntity>(Guid id) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }

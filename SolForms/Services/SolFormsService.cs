@@ -126,7 +126,9 @@ namespace SolForms.Services
         public async Task UpdateOption(Guid id, Option data) => 
             await _dataSource.Update(id, data);
         public async Task<bool> DeleteOption(Guid OptionId) =>
-            await _dataSource.Delete<Option>(OptionId);        
+            await _dataSource.Delete<Option>(OptionId);
+        public async Task<bool> IsRedFlag(Guid optionId) => 
+            await _dataSource.IsRedFlag<Option>(optionId);
         #endregion
 
         #region Submittions

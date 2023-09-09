@@ -67,5 +67,11 @@ namespace SolForms.Data.DataSourceImp
             var filter = Builders<TEntity>.Filter.Eq("_id", id);
             await collection.ReplaceOneAsync(filter, updatedEntity);
         }
+
+        //TODO : Complete this
+        public Task<bool> IsRedFlag<TEntity>(Guid id) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }

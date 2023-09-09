@@ -29,6 +29,11 @@ namespace SolForms.Data.DataSourceImp
                 _ => throw new NotImplementedException($"Get method not implemented for {entityType}")
             };
         }
+        public async Task<bool> IsRedFlag<TEntity>(Guid id) where TEntity : class
+        {
+            var dbSet = _context.Set<Option>();
+            return await dbSet.Where(x => x.Id == id).Select(y => y.IsRedFlag).FirstOrDefaultAsync() ?? false;
+        }
         public async Task<TEntity?[]?> GetAll<TEntity>(Guid? parentId = null) where TEntity : class
         {
             var entityType = GetEntityType<TEntity>();
@@ -101,7 +106,7 @@ namespace SolForms.Data.DataSourceImp
             return EntityType.SolForm;
         }
         #region Get
-        private async Task<SolForm?> GetFormAsync(Guid? id)
+        private async Task<SolForm?> GetFormAsync(Guid id)
         {
             var dbSet = _context.Set<SolForm>();
             return await dbSet.Where(x => x.Id == id)
@@ -118,35 +123,35 @@ namespace SolForms.Data.DataSourceImp
                     .ThenInclude(o => o.Options)
                 .FirstOrDefaultAsync();
         }
-        private async Task<BaseQuestion?> GetQuestionAsync(Guid? id)
+        private async Task<BaseQuestion?> GetQuestionAsync(Guid id)
         {
             var dbSet = _context.Set<BaseQuestion>();
             return await dbSet.Where(x => x.Id == id)
                 .Include(o => o.Options)
                 .FirstOrDefaultAsync();
         }
-        private async Task<Option?> GetOptionAsync(Guid? id)
+        private async Task<Option?> GetOptionAsync(Guid id)
         {
             var dbSet = _context.Set<Option>();
             return await dbSet.FirstOrDefaultAsync(x=>x.Id == id);
         }
-        private async Task<AnsweringSession?> GetAnsweringSessionAsync(Guid? id)
+        private async Task<AnsweringSession?> GetAnsweringSessionAsync(Guid id)
         {
             var dbSet = _context.Set<AnsweringSession>();
             return await dbSet.Where(x => x.Id == id)
                 .Include(a => a.Answers)
                 .FirstOrDefaultAsync();
         }
-        private async Task<Answer?> GetAnswerAsync(Guid? id)
+        private async Task<Answer?> GetAnswerAsync(Guid id)
         {
             var dbSet = _context.Set<Answer>();
             return await dbSet.FindAsync(id);
         }
-        private async Task<ShowCondition?> GetConditionAsync(Guid? id)
+        private async Task<ShowCondition?> GetConditionAsync(Guid id)
         {
             var dbSet = _context.Set<ShowCondition>();
             return await dbSet.FindAsync(id);            
-        }
+        }        
         #endregion
 
         #region GetAll

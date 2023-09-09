@@ -92,5 +92,11 @@ namespace SolForms.Data.DataSourceImp
                 return _options.Submissions + key;            
             return string.Empty;
         }
+
+        //TODO : Complete this
+        public Task<bool> IsRedFlag<TEntity>(Guid id) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }
