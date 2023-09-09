@@ -23,6 +23,8 @@ namespace SolForms.Models
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public string UserPhone { get; set; }
+        public DateTime BirthDate { get; set; }
+        public DateTime ConsultationDate { get; set; }
         public List<Answer>? Answers { get; set; } = new List<Answer>();
     }
 }
