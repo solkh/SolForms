@@ -6,7 +6,7 @@ using SolForms.Services;
 namespace SolFormsApi.Controllers
 {
     [ApiController]
-    [Route("SolForms/Submittions")]
+    [Route("SolForms/Submissions")]
     public class SubmissionController : ControllerBase
     {
         private readonly ILogger<AnsweringSession> _logger;
@@ -19,11 +19,11 @@ namespace SolFormsApi.Controllers
         //Get
         [HttpGet("{id:guid}")]
         public async Task<AnsweringSession?> Get(Guid id) =>
-            await _service.GetSubmittion(id);
+            await _service.GetSubmission(id);
 
         [HttpGet("All/{formId:guid}")]
         public async Task<AnsweringSession?[]> GetAll(Guid formId) =>
-            await _service.GetSubmittions(formId);
+            await _service.GetSubmissions(formId);
 
 
         //Post

@@ -12,6 +12,7 @@ namespace SolForms.Models
         Guid Id { get; set; }
         Guid FormId { get; set; }
         string FormSectionTitle { get; set; }
+        string FormSectionDescription { get; set; }
         int? Order { get; set; }
         List<BaseQuestion>? Questions { get; set; }
 
@@ -21,6 +22,7 @@ namespace SolForms.Models
         public Guid Id { get; set; }
         public Guid FormId { get; set; }
         public string FormSectionTitle { get; set; }
+        public string FormSectionDescription { get; set; }
         public int? Order { get; set; }
         public List<BaseQuestion>? Questions { get; set; } = new List<BaseQuestion>();
 

@@ -110,8 +110,8 @@ namespace SolForms.Data.DataSourceImp
         {
             var dbSet = _context.Set<SolForm>();
             return await dbSet.Where(x => x.Id == id)
-                .Include(x => x.FormSections)
-                    .ThenInclude(y => y.Questions)
+                .Include(x => x.FormSections.OrderBy(o=>o.Order))
+                    .ThenInclude(y => y.Questions.OrderBy(o=>o.Order))
                         .ThenInclude(z => z.Options)
             .FirstOrDefaultAsync();
         }
@@ -158,23 +158,23 @@ namespace SolForms.Data.DataSourceImp
         private async Task<SolForm[]?> GetAllFormsAsync()
         {
             var dbSet = _context.Set<SolForm>();
-            return await dbSet.Include(x => x.FormSections)
-                .ThenInclude(y => y.Questions)
+            return await dbSet.Include(x => x.FormSections.OrderBy(o=>o.Order))
+                .ThenInclude(y => y.Questions.OrderBy(o=>o.Order))
                     .ThenInclude(z => z.Options)
             .ToArrayAsync();            
         }
         private async Task<SolFormSection[]?> GetAllSectionsAsync(Guid? formId)
         {
             var dbSet = _context.Set<SolFormSection>();
-            return await dbSet.Where(s=>s.FormId == formId)
-                .Include(q => q.Questions)
+            return await dbSet.Where(s=>s.FormId == formId).OrderBy(o=>o.Order)
+                .Include(q => q.Questions.OrderBy(o => o.Order))
                     .ThenInclude(o => o.Options)
                 .ToArrayAsync();                      
         }
         private async Task<BaseQuestion[]?> GetAllQuestionsAsync(Guid? sectionId)
         {
             var dbSet = _context.Set<BaseQuestion>();
-            return await dbSet.Where(x => x.SectionId == sectionId)
+            return await dbSet.Where(x => x.SectionId == sectionId).OrderBy(o=>o.Order)
                 .Include(o=>o.Options)
                 .ToArrayAsync();
         }

@@ -132,9 +132,9 @@ namespace SolForms.Services
         #endregion
 
         #region Submittions
-        public async Task<AnsweringSession?> GetSubmittion(Guid sessionId) => 
+        public async Task<AnsweringSession?> GetSubmission(Guid sessionId) => 
             await _dataSource.Get<AnsweringSession>(sessionId);
-        public async Task<AnsweringSession?[]> GetSubmittions(Guid formId) =>
+        public async Task<AnsweringSession?[]> GetSubmissions(Guid formId) =>
             await _dataSource.GetAll<AnsweringSession>(formId) ?? Array.Empty<AnsweringSession>();
         public async Task<int> CountSubmittions(Guid formID) =>
             await _dataSource.Count<AnsweringSession>();

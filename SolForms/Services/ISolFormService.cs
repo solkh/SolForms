@@ -48,8 +48,8 @@ namespace SolForms.Services
         Task<bool> DeleteOption(Guid OptionId);
 
         //Submittions
-        Task<AnsweringSession?> GetSubmittion(Guid sessionId);
-        Task<AnsweringSession?[]> GetSubmittions(Guid formId);
+        Task<AnsweringSession?> GetSubmission(Guid sessionId);
+        Task<AnsweringSession?[]> GetSubmissions(Guid formId);
         Task SubmitForm(AnsweringSession answeringSession);
         Task UpdateSubmission(AnsweringSession answeringSession);
         Task UpdateSubmission(Guid id, AnsweringSession answeringSession);
