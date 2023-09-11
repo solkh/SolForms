@@ -8,46 +8,53 @@ namespace SolFormsApi.Extentions
     public static class StartupExt
     {
         // AddSolForms
-        public static IServiceCollection AddSolFormsApi(this IServiceCollection services)
+        public static IServiceCollection AddSolFormsApi(this IServiceCollection services)=>
+            services.AddSolFormsApi<SolFormsService>();
+
+        public static IServiceCollection AddSolFormsApi<T>(this IServiceCollection services) where T :  class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, KeyValueDataSource>();
-            services.AddScoped<ISolFormsService, SolFormsService>();
-          
-            return services;
-        }
-        public static IServiceCollection AddMultipleSolFormsApi(this IServiceCollection services)
-        {
-            services.AddScoped<IFormsDataSource, KeyTypeValueDataSource>();
-            services.AddScoped<ISolFormsService, SolFormsService>();
+            services.AddScoped<ISolFormsService, T>();
 
             return services;
         }
-        public static IServiceCollection AddRelationalSolForms(this IServiceCollection services)
+        public static IServiceCollection AddMultipleSolFormsApi(this IServiceCollection services) =>
+            services.AddMultipleSolFormsApi<SolFormsService>();
+        public static IServiceCollection AddMultipleSolFormsApi<T>(this IServiceCollection services) where T : class, ISolFormsService
+        {
+            services.AddScoped<IFormsDataSource, KeyTypeValueDataSource>();
+            services.AddScoped<ISolFormsService, T>();
+
+            return services;
+        }
+        public static IServiceCollection AddRelationalSolFormsApi(this IServiceCollection services) =>
+            services.AddMultipleSolFormsApi<SolFormsService>();
+        public static IServiceCollection AddRelationalSolFormsApi<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, RelationalDataSource>();
-            services.AddScoped<ISolFormsService, SolFormsService>();
+            services.AddScoped<ISolFormsService, T>();
 
             return services;
         }
 
         // Use Context
-        public static void UseSolFormsDbContext<TContext>(this IServiceCollection services)
+        public static void UseSolFormsDbContextApi<TContext>(this IServiceCollection services)
             where TContext : DbContext
         {
             services.AddScoped<DbContext, TContext>();
         }
-        public static void UseFileSystem<TContext>(this IServiceCollection services)
+        public static void UseFileSystemApi<TContext>(this IServiceCollection services)
             where TContext : DbContext
         {
             services.AddScoped<DbContext, TContext>();
         }
 
         // Setup Context (Use Model Builder)
-        public static void UseSolFormsModels(this ModelBuilder modelBuilder)
+        public static void UseSolFormsModelsApi(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FormsKeyValue>().ToTable("FormsKeyValue").HasKey(x => x.Key);          
         }
-        public static void UseMultipleSolFormsModels(this ModelBuilder modelBuilder)
+        public static void UseMultipleSolFormsModelsApi(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FormsKeyTypeValue>().ToTable("MultiTypeKeyValue").HasKey(x => x.Id);
         }

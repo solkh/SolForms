@@ -138,10 +138,10 @@ namespace SolForms.Services
             await _dataSource.GetAll<AnsweringSession>(formId) ?? Array.Empty<AnsweringSession>();
         public async Task<int> CountSubmittions(Guid formID) =>
             await _dataSource.Count<AnsweringSession>();
-        public async Task SubmitForm(AnsweringSession answeringSession) => 
+        public async virtual Task SubmitForm(AnsweringSession answeringSession) => 
             await _dataSource.Create(answeringSession);
         public async Task UpdateSubmission(AnsweringSession answeringSession) => 
-            await _dataSource.Update(answeringSession.Id ?? Guid.Empty, answeringSession);
+            await _dataSource.Update(answeringSession.Id , answeringSession);
         public async Task UpdateSubmission(Guid id, AnsweringSession answeringSession) => 
             await _dataSource.Update(id, answeringSession);
         public async Task<bool> DeleteSubmittion(Guid sessionId) => 
@@ -161,7 +161,7 @@ namespace SolForms.Services
                 await _dataSource.Create(Answer);            
         }
         public async Task UpdateAnswer(Answer answer) => 
-            await _dataSource.Update(answer.Id.Value, answer);
+            await _dataSource.Update(answer.Id, answer);
         public async Task UpdateAnswer(Guid id, Answer answer) => 
             await _dataSource.Update(id, answer);
         public async Task<bool> DeleteAnswer(Guid answerId) => 

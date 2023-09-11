@@ -12,31 +12,39 @@ namespace SolForms.Extentions
     public static class StartupExt
     {
         // AddSolForms
-        public static IServiceCollection AddSolForms(this IServiceCollection services)
+        public static IServiceCollection AddSolForms(this IServiceCollection services) =>
+            services.AddSolForms<SolFormsService>();
+        public static IServiceCollection AddSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, KeyValueDataSource>();
-            services.AddScoped<ISolFormsService, SolFormsService>();
+            services.AddScoped<ISolFormsService, T>();
           
             return services;
         }
-        public static IServiceCollection AddMultipleSolForms(this IServiceCollection services)
+        public static IServiceCollection AddMultipleSolForms(this IServiceCollection services) =>
+           services.AddMultipleSolForms<SolFormsService>();
+        public static IServiceCollection AddMultipleSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, KeyTypeValueDataSource>();
-            services.AddScoped<ISolFormsService, SolFormsService>();
+            services.AddScoped<ISolFormsService, T>();
 
             return services;
         }
-        public static IServiceCollection AddRelationalSolForms(this IServiceCollection services)
+        public static IServiceCollection AddRelationalSolForms(this IServiceCollection services) =>
+            services.AddRelationalSolForms<SolFormsService>();
+        public static IServiceCollection AddRelationalSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, RelationalDataSource>();
-            services.AddScoped<ISolFormsService, SolFormsService>();
+            services.AddScoped<ISolFormsService, T>();
 
             return services;
         }
-        public static IServiceCollection AddMongoDbSolForms(this IServiceCollection services)
+        public static IServiceCollection AddMongoDbSolForms(this IServiceCollection services) =>
+            services.AddMongoDbSolForms<SolFormsService>();
+        public static IServiceCollection AddMongoDbSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
         {                       
             services.AddScoped<IFormsDataSource, MongoDbDataSource>();
-            services.AddScoped<ISolFormsService, SolFormsService>();
+            services.AddScoped<ISolFormsService, T>();
 
             return services;
         }
