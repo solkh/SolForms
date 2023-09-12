@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SolForms.Extentions;
 using SolForms.Models;
+using SolForms.Models.Questions;
 using SolForms.Services;
 
 namespace SolFormsApi.Controllers
@@ -28,15 +29,22 @@ namespace SolFormsApi.Controllers
 
         //Post
         [HttpPost]
-        public async Task Create(AnsweringSession answeringSession)
+        public async Task Create(AnsweringSessionDto answeringSession)
         {
             var sid = Guid.NewGuid();
-            answeringSession.Id = sid;
-            foreach (var answer in answeringSession.Answers)
+            var answers = new AnsweringSession()
             {
-               answer.SubmissionId = sid;
-            }         
-            await _service.SubmitForm(answeringSession);
+                Id = sid,
+                UserPhone = answeringSession.UserPhone,
+                BirthDate = answeringSession.BirthDate,
+                ConsultationDate = answeringSession.ConsultationDate,
+                FromId = answeringSession.FromId,
+                UserEmail = answeringSession.UserEmail,
+                UserName = answeringSession.UserName,
+                Answers = answeringSession.Answers.Select(x => new Answer { SubmissionId = sid, QuestionId = x.QuestionId, Value = x.Value }).ToList(),
+            };
+            
+            await _service.SubmitForm(answers);
         }
 
         [HttpPost("CreateAnsweringSessionTemplte")]

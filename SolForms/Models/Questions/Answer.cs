@@ -5,7 +5,7 @@ namespace SolForms.Models.Questions
 {
     public record Answer
     {
-        public Guid Id { get; set; }        
+        public Guid Id { get; set; }
         public Guid SubmissionId { get; set; }        
         public Guid QuestionId { get; set; }        
         public string Value { get; set; } = "";
@@ -15,5 +15,12 @@ namespace SolForms.Models.Questions
             Type != QuestionType.MultipleChoice && Type != QuestionType.SingleChoice ?
             new string[] { Value } :
             Value.Split(",", StringSplitOptions.RemoveEmptyEntries);
+    }
+    public record AnswerDto
+    {
+        public Guid Id { get; set; }
+        public Guid SubmissionId { get; set; }
+        public Guid QuestionId { get; set; }
+        public string Value { get; set; } = "";
     }
 }
