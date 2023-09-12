@@ -18,9 +18,7 @@ namespace SolForms.Models.Questions
     }
     public record AnswerDto
     {
-        public Guid Id { get; set; }
-        public Guid SubmissionId { get; set; }
-        public Guid QuestionId { get; set; }
+        public Guid? QuestionId { get; set; }
         public string Value { get; set; } = "";
     }
 }

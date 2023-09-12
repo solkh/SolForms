@@ -41,9 +41,9 @@ namespace SolFormsApi.Controllers
                 FromId = answeringSession.FromId,
                 UserEmail = answeringSession.UserEmail,
                 UserName = answeringSession.UserName,
-                Answers = answeringSession.Answers.Select(x => new Answer { SubmissionId = sid, QuestionId = x.QuestionId, Value = x.Value }).ToList(),
+                Answers = answeringSession.Answers.Select(x => new Answer { SubmissionId = sid, QuestionId = x.QuestionId ?? Guid.Empty, Value = x.Value }).ToList(),
             };
-            
+
             await _service.SubmitForm(answers);
         }
 
@@ -61,7 +61,7 @@ namespace SolFormsApi.Controllers
         //Delete
         [HttpDelete("Delete/{id:guid}")]
         public async Task<bool> Delete(Guid id) =>
-            await _service.DeleteSubmittion(id);       
-        
+            await _service.DeleteSubmittion(id);
+
     }
 }
