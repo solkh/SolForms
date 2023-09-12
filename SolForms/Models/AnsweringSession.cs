@@ -9,7 +9,7 @@ namespace SolForms.Models
 {
     public interface IAnsweringSession
     {
-        Guid Id { get; set; }
+        Guid? Id { get; set; }
         Guid FromId { get; set; }
         string UserName { get; set; }
         string UserEmail { get; set; }
@@ -18,7 +18,7 @@ namespace SolForms.Models
     }
     public class AnsweringSession : IAnsweringSession
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; } = Guid.Empty;
         public Guid FromId { get; set; }
         public string UserName { get; set; }
         public string UserEmail { get; set; }

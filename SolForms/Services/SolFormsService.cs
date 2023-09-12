@@ -141,7 +141,7 @@ namespace SolForms.Services
         public async virtual Task SubmitForm(AnsweringSession answeringSession) => 
             await _dataSource.Create(answeringSession);
         public async Task UpdateSubmission(AnsweringSession answeringSession) => 
-            await _dataSource.Update(answeringSession.Id , answeringSession);
+            await _dataSource.Update(answeringSession.Id.Value , answeringSession);
         public async Task UpdateSubmission(Guid id, AnsweringSession answeringSession) => 
             await _dataSource.Update(id, answeringSession);
         public async Task<bool> DeleteSubmittion(Guid sessionId) => 
