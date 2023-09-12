@@ -6,7 +6,7 @@ namespace SolForms.Models.Questions
     public record Answer
     {
         public Guid Id { get; set; }        
-        public Guid SessionId { get; set; }        
+        public Guid SubmissionId { get; set; }        
         public Guid QuestionId { get; set; }        
         public string Value { get; set; } = "";
 

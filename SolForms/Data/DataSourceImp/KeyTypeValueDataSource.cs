@@ -760,7 +760,7 @@ namespace SolForms.Data.DataSourceImp
                 var data = JsonSerializer.Deserialize<AnsweringSession>(submission.Value);
                 if (data != null)
                 {
-                    data?.Answers?.RemoveAll(x => x.SessionId == sessionId);
+                    data?.Answers?.RemoveAll(x => x.SubmissionId == sessionId);
                     return await _context.SaveChangesAsync() > 1;
                 }
             }

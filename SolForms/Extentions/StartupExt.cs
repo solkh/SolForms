@@ -126,7 +126,7 @@ namespace SolForms.Extentions
             modelBuilder.Entity<AnsweringSession>()
                 .HasMany(s => s.Answers)
                 .WithOne()
-                .HasForeignKey(a => a.SessionId);
+                .HasForeignKey(a => a.SubmissionId);
 
             // Answer Configuration
             modelBuilder.Entity<Answer>()

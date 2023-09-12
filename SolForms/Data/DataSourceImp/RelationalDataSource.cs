@@ -191,7 +191,7 @@ namespace SolForms.Data.DataSourceImp
         private async Task<Answer[]?> GetAllAnswersAsync(Guid? sessionId)
         {
             var dbSet = _context.Set<Answer>();
-            return await dbSet.Where(x => x.SessionId == sessionId).ToArrayAsync();
+            return await dbSet.Where(x => x.SubmissionId == sessionId).ToArrayAsync();
         }
         #endregion
 
@@ -240,7 +240,7 @@ namespace SolForms.Data.DataSourceImp
         private async Task CreateAnswerAsync(Guid sessionId, Answer answer)
         {
             var dbSet = _context.Set<Answer>();
-            answer.SessionId = sessionId;
+            answer.SubmissionId = sessionId;
             await dbSet.AddAsync(answer);
             await _context.SaveChangesAsync();
         }
@@ -285,7 +285,7 @@ namespace SolForms.Data.DataSourceImp
         private async Task<bool> DeleteAllAnswersAsync(Guid? sessionId)
         {
             var dbSet = _context.Set<Answer>();
-            var answers = await dbSet.Where(x=>x.SessionId == sessionId).ToListAsync();
+            var answers = await dbSet.Where(x=>x.SubmissionId == sessionId).ToListAsync();
             dbSet.RemoveRange(answers);
             return await _context.SaveChangesAsync() > 1;
         }

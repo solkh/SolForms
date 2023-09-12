@@ -28,8 +28,16 @@ namespace SolFormsApi.Controllers
 
         //Post
         [HttpPost]
-        public async Task Create(AnsweringSession answeringSession) =>
+        public async Task Create(AnsweringSession answeringSession)
+        {
+            var sid = Guid.NewGuid();
+            answeringSession.Id = sid;
+            foreach (var answer in answeringSession.Answers)
+            {
+               answer.SubmissionId = sid;
+            }         
             await _service.SubmitForm(answeringSession);
+        }
 
         [HttpPost("CreateAnsweringSessionTemplte")]
         public async Task Create(string userName, string userEmail, string userPhone) =>

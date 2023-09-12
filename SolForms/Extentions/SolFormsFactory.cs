@@ -398,7 +398,7 @@ namespace SolForms.Extentions
             if (answeringSession.Answers == null) answeringSession.Answers = new List<Answer>();
             foreach(var answer in answers)
             {
-                answer.SessionId = answeringSession.Id;
+                answer.SubmissionId = answeringSession.Id;
                 answeringSession.Answers.Add(answer);
             }
             return answeringSession;
