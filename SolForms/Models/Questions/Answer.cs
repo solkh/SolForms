@@ -10,7 +10,7 @@ namespace SolForms.Models.Questions
         public Guid QuestionId { get; set; }        
         public string Value { get; set; } = "";
 
-        QuestionType Type { get; set; }
+        public QuestionType Type { get; set; }
         public string[] Values =>
             Type != QuestionType.MultipleChoice && Type != QuestionType.SingleChoice ?
             new string[] { Value } :

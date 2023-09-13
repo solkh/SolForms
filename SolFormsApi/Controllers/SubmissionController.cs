@@ -43,7 +43,11 @@ namespace SolFormsApi.Controllers
                 UserName = answeringSession.UserName,
                 Answers = answeringSession.Answers.Select(x => new Answer { SubmissionId = sid, QuestionId = x.QuestionId ?? Guid.Empty, Value = x.Value }).ToList(),
             };
-
+            foreach (Answer answer2 in answers.Answers)
+            {
+                Answer answer = answer2;
+                answer.Type = await _service.GetQuestionTypeById(answer2.QuestionId);
+            }
             await _service.SubmitForm(answers);
         }
 

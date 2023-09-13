@@ -1,5 +1,6 @@
 ﻿using SolForms.Models.Questions;
 using SolForms.Models;
+using SolForms.Models.Enums;
 
 namespace SolForms.Services
 {
@@ -29,7 +30,8 @@ namespace SolForms.Services
         Task CreateQuestion(BaseQuestion question);
         Task UpdateQuestion(BaseQuestion question);
         Task UpdateQuestion(Guid id, BaseQuestion question);
-        Task<bool> DeleteQuestion(Guid questionId);        
+        Task<bool> DeleteQuestion(Guid questionId);
+        Task<QuestionType> GetQuestionTypeById(Guid questionId);
 
         //Conditions        
         Task<ShowCondition?> GetCondtion(Guid conditionId);           

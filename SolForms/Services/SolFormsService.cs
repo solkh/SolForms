@@ -98,7 +98,9 @@ namespace SolForms.Services
         public async Task UpdateQuestion(Guid id, BaseQuestion question) => 
             await _dataSource.Update(id, question);
         public async Task<bool> DeleteQuestion(Guid questionId) =>
-            await _dataSource.Delete<BaseQuestion>(questionId);        
+            await _dataSource.Delete<BaseQuestion>(questionId);
+        public async Task<QuestionType> GetQuestionTypeById(Guid questionId) 
+            => (await _dataSource.Get<BaseQuestion>(questionId)).Type;
         #endregion
 
         #region Conditions
