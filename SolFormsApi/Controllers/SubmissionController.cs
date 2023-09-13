@@ -35,7 +35,7 @@ namespace SolFormsApi.Controllers
             var answers = new AnsweringSession()
             {
                 Id = sid,
-                FromId = answeringSession.FromId,
+                FormId = answeringSession.FormId,
                 UserPhone = answeringSession.UserPhone,
                 BirthDate = answeringSession.BirthDate,
                 ConsultationDate = answeringSession.ConsultationDate,                

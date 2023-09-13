@@ -10,7 +10,7 @@ namespace SolForms.Models
     public interface IAnsweringSession
     {
         Guid Id { get; set; }
-        Guid FromId { get; set; }
+        Guid FormId { get; set; }
         string UserName { get; set; }
         string UserEmail { get; set; }
         string UserPhone { get; set; }
@@ -19,7 +19,7 @@ namespace SolForms.Models
     public class AnsweringSession : IAnsweringSession
     {
         public Guid Id { get; set; }
-        public Guid FromId { get; set; }
+        public Guid FormId { get; set; }
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public string UserPhone { get; set; }
@@ -29,7 +29,7 @@ namespace SolForms.Models
     }
     public class AnsweringSessionDto
     {
-        public Guid FromId { get; set; }
+        public Guid FormId { get; set; }
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public string UserPhone { get; set; }

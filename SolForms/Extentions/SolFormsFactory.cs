@@ -405,7 +405,7 @@ namespace SolForms.Extentions
         }
         public static AnsweringSession AddAnsweringSession(this SolForm form, AnsweringSession answeringSession)
         {
-            answeringSession.FromId = form.Id;
+            answeringSession.FormId = form.Id;
             return answeringSession;
         }
     }
