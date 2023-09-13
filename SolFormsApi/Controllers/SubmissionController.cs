@@ -35,18 +35,17 @@ namespace SolFormsApi.Controllers
             var answers = new AnsweringSession()
             {
                 Id = sid,
+                FromId = answeringSession.FromId,
                 UserPhone = answeringSession.UserPhone,
                 BirthDate = answeringSession.BirthDate,
-                ConsultationDate = answeringSession.ConsultationDate,
-                FromId = answeringSession.FromId,
+                ConsultationDate = answeringSession.ConsultationDate,                
                 UserEmail = answeringSession.UserEmail,
                 UserName = answeringSession.UserName,
                 Answers = answeringSession.Answers.Select(x => new Answer { SubmissionId = sid, QuestionId = x.QuestionId ?? Guid.Empty, Value = x.Value }).ToList(),
             };
-            foreach (Answer answer2 in answers.Answers)
-            {
-                Answer answer = answer2;
-                answer.Type = await _service.GetQuestionTypeById(answer2.QuestionId);
+            foreach (var answer in answers.Answers)
+            {                
+                answer.Type = await _service.GetQuestionTypeById(answer.QuestionId);
             }
             await _service.SubmitForm(answers);
         }
