@@ -11,9 +11,9 @@ namespace SolFormsApi.Controllers
     [Route("SolForms/Questions")]
     public class QuestionController : ControllerBase
     {
-        private readonly ILogger<BaseQuestion> _logger;
-        private readonly ISolFormsService _service;
-        public QuestionController(ILogger<BaseQuestion> logger, ISolFormsService service)
+        private readonly ILogger<SFQuestion> _logger;
+        private readonly SFService _service;
+        public QuestionController(ILogger<SFQuestion> logger, SFService service)
         {
             _logger = logger;
             _service = service;
@@ -21,17 +21,17 @@ namespace SolFormsApi.Controllers
 
         //Get
         [HttpGet("{id:guid}")]
-        public async Task<BaseQuestion?> Get(Guid id) =>
+        public async Task<SFQuestion?> Get(Guid id) =>
             await _service.GetQuestion(id);
 
         [HttpGet("All/{sectionId:guid}")]
-        public async Task<BaseQuestion?[]> GetBySectionId(Guid sectionId) =>
+        public async Task<SFQuestion?[]> GetBySectionId(Guid sectionId) =>
             await _service.GetQuestions(sectionId);            
 
 
         //Post
         [HttpPost]
-        public async Task Create(BaseQuestion question) =>
+        public async Task Create(SFQuestion question) =>
             await _service.CreateQuestion(question);
 
         [HttpPost("CreateQuestionTemplte")]
@@ -41,7 +41,7 @@ namespace SolFormsApi.Controllers
 
         //Put
         [HttpPut("{id:guid}")]
-        public async Task Update(Guid id, BaseQuestion question) =>
+        public async Task Update(Guid id, SFQuestion question) =>
             await _service.UpdateQuestion(id, question);
 
 

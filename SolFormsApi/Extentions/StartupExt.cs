@@ -14,8 +14,8 @@ namespace SolFormsApi.Extentions
         public static IServiceCollection AddSolFormsApi<T>(this IServiceCollection services) where T :  class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, KeyValueDataSource>();
-            services.AddScoped<ISolFormsService, T>();
-
+            services.AddScoped<SFService, SFService>();
+          
             return services;
         }
         public static IServiceCollection AddMultipleSolFormsApi(this IServiceCollection services) =>
@@ -23,7 +23,7 @@ namespace SolFormsApi.Extentions
         public static IServiceCollection AddMultipleSolFormsApi<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, KeyTypeValueDataSource>();
-            services.AddScoped<ISolFormsService, T>();
+            services.AddScoped<SFService, SFService>();
 
             return services;
         }
@@ -32,7 +32,7 @@ namespace SolFormsApi.Extentions
         public static IServiceCollection AddRelationalSolFormsApi<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, RelationalDataSource>();
-            services.AddScoped<ISolFormsService, T>();
+            services.AddScoped<SFService, SFService>();
 
             return services;
         }

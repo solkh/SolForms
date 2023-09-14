@@ -4,7 +4,7 @@ using SolForms.Models.Enums;
 
 namespace SolForms.Services
 {
-    public interface ISolFormsService
+    public interface ISFService
     {
         //Forms
         Task<SolForm?> GetForm(Guid formId);
@@ -17,54 +17,53 @@ namespace SolForms.Services
         Task<bool> SetActive(Guid id, bool active);
 
         //Sections
-        Task<SolFormSection?> GetSection(Guid sectionId);
-        Task<SolFormSection?[]> GetSections(Guid formId);                  
-        Task CreateSection(SolFormSection section);
-        Task UpdateSection(SolFormSection section);
-        Task UpdateSection(Guid id, SolFormSection section);
+        Task<SFSection?> GetSection(Guid sectionId);
+        Task<SFSection?[]> GetSections(Guid formId);                  
+        Task CreateSection(SFSection section);
+        Task UpdateSection(SFSection section);
+        Task UpdateSection(Guid id, SFSection section);
         Task<bool> DeleteSection(Guid sectionId);
 
         //Questions
-        Task<BaseQuestion?> GetQuestion(Guid questionId);
-        Task<BaseQuestion?[]> GetQuestions(Guid sectionId);                        
-        Task CreateQuestion(BaseQuestion question);
-        Task UpdateQuestion(BaseQuestion question);
-        Task UpdateQuestion(Guid id, BaseQuestion question);
-        Task<bool> DeleteQuestion(Guid questionId);
-        Task<QuestionType> GetQuestionTypeById(Guid questionId);
+        Task<SFQuestion?> GetQuestion(Guid questionId);
+        Task<SFQuestion?[]> GetQuestions(Guid sectionId);                        
+        Task CreateQuestion(SFQuestion question);
+        Task UpdateQuestion(SFQuestion question);
+        Task UpdateQuestion(Guid id, SFQuestion question);
+        Task<bool> DeleteQuestion(Guid questionId);        
 
         //Conditions        
-        Task<ShowCondition?> GetCondtion(Guid conditionId);           
-        Task CreateCondition(ShowCondition condition);
-        Task UpdateCondtion(ShowCondition condition);
-        Task UpdateCondtion(Guid id, ShowCondition condition);
+        Task<SFShowCondition?> GetCondtion(Guid conditionId);           
+        Task CreateCondition(SFShowCondition condition);
+        Task UpdateCondtion(SFShowCondition condition);
+        Task UpdateCondtion(Guid id, SFShowCondition condition);
         Task<bool> DeleteCondtion(Guid conditionId);
 
         //Options
-        Task<Option?> GetOption(Guid optionId);
-        Task<Option?[]> GetOptions(Guid questionId);
+        Task<SFOption?> GetOption(Guid optionId);
+        Task<SFOption?[]> GetOptions(Guid questionId);
         Task<bool> IsRedFlag(Guid optionId);
-        Task CreateOption(Option option);
-        Task UpdateOption(Option option);
-        Task UpdateOption(Guid id, Option option);
+        Task CreateOption(SFOption option);
+        Task UpdateOption(SFOption option);
+        Task UpdateOption(Guid id, SFOption option);
         Task<bool> DeleteOption(Guid OptionId);
 
         //Submittions
-        Task<AnsweringSession?> GetSubmission(Guid sessionId);
-        Task<AnsweringSession?[]> GetSubmissions(Guid formId);
-        Task SubmitForm(AnsweringSession answeringSession);
-        Task UpdateSubmission(AnsweringSession answeringSession);
-        Task UpdateSubmission(Guid id, AnsweringSession answeringSession);
+        Task<SFSubmition?> GetSubmittion(Guid sessionId);
+        Task<SFSubmition?[]> GetSubmittions(Guid formId);
+        Task SubmitForm(SFSubmition answeringSession);
+        Task UpdateSubmission(SFSubmition answeringSession);
+        Task UpdateSubmission(Guid id, SFSubmition answeringSession);
         Task<bool> DeleteSubmittion(Guid sessionId); 
         Task<int> CountSubmittions(Guid formId);        
 
         //Answers
-        Task<Answer?> GetAnswer(Guid sessionId);
-        Task<Answer?[]> GetAnswers(Guid sesstionId);        
-        Task CreateAnswers(Answer[] answers);
-        Task CreateAnswer(Answer answer);
-        Task UpdateAnswer(Answer answer);
-        Task UpdateAnswer(Guid id, Answer answer);
+        Task<SFAnswer?> GetAnswer(Guid sessionId);
+        Task<SFAnswer?[]> GetAnswers(Guid sesstionId);        
+        Task CreateAnswers(SFAnswer[] answers);
+        Task CreateAnswer(SFAnswer answer);
+        Task UpdateAnswer(SFAnswer answer);
+        Task UpdateAnswer(Guid id, SFAnswer answer);
         Task<bool> DeleteAnswer(Guid answerId);        
     }
 }

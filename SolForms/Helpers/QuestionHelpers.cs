@@ -11,7 +11,7 @@ namespace SolForms.Helpers
     public static class QuestionHelpers
     {
 
-        public static IBaseQuestion GetQuestionById(this ISolForm form, Guid basequestionId)
+        public static SFQuestion GetQuestionById(this SolForm form, Guid basequestionId)
         {
             foreach(var section in form.FormSections)
             {
@@ -21,19 +21,19 @@ namespace SolForms.Helpers
                     return question;
                 }
             }
-            return new BaseQuestion();            
+            return new SFQuestion();            
         }
 
-        public static IBaseQuestion GetQuestionById(this IFormSection section, Guid basequestionId)
+        public static SFQuestion GetQuestionById(this SFSection section, Guid basequestionId)
         {
             return section.Questions.FirstOrDefault(x => x.Id == basequestionId);
         }
-        public static IBaseQuestion GetQuestionAt(this ISolForm form, int index)
+        public static SFQuestion GetQuestionAt(this SolForm form, int index)
         {
             return default;
         }
 
-        public static IBaseQuestion GetQuestionAt(this IFormSection form, int index)
+        public static SFQuestion GetQuestionAt(this SFSection form, int index)
         {
             return default;
         }

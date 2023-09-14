@@ -11,8 +11,8 @@ namespace SolFormsApi.Controllers
     public class OptionController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly ISolFormsService _service;
-        public OptionController(ILogger<OptionController> logger, ISolFormsService service)
+        private readonly SFService _service;
+        public OptionController(ILogger<OptionController> logger, SFService service)
         {
             _logger = logger;
             _service = service;
@@ -20,11 +20,11 @@ namespace SolFormsApi.Controllers
 
         //Get
         [HttpGet("{id:guid}")]
-        public async Task<Option?> Get(Guid id) =>
+        public async Task<SFOption?> Get(Guid id) =>
             await _service.GetOption(id);
 
         [HttpGet("All/{questionId:guid}")]
-        public async Task<Option?[]> GetByQuestionId(Guid questionId) =>
+        public async Task<SFOption?[]> GetByQuestionId(Guid questionId) =>
             await _service.GetOptions(questionId);
 
         [HttpGet("IsRedFlag/{id:guid}")]
@@ -35,7 +35,7 @@ namespace SolFormsApi.Controllers
 
         //Post
         [HttpPost]
-        public async Task Create(Option option) =>
+        public async Task Create(SFOption option) =>
             await _service.CreateOption(option);
 
         [HttpPost("CreateOptionTemplte")]
@@ -45,7 +45,7 @@ namespace SolFormsApi.Controllers
 
         //Put
         [HttpPut("{id:guid}")]
-        public async Task Update(Guid id, Option option) =>
+        public async Task Update(Guid id, SFOption option) =>
             await _service.UpdateOption(id, option);
 
 

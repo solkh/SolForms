@@ -9,26 +9,26 @@ namespace SolFormsApi.Controllers
     [Route("SolForms/Sections")]
     public class SectionController : ControllerBase
     {
-        private readonly ILogger<SolFormSection> _logger;
-        private readonly ISolFormsService _service;
-        public SectionController(ILogger<SolFormSection> logger, ISolFormsService service)
+        private readonly ILogger<SFSection> _logger;
+        private readonly SFService _service;
+        public SectionController(ILogger<SFSection> logger, SFService service)
         {
             _logger = logger;
             _service = service;
         }
         //Get
         [HttpGet("{id:guid}")]
-        public async Task<SolFormSection?> Get(Guid id) =>
+        public async Task<SFSection?> Get(Guid id) =>
             await _service.GetSection(id);
 
         [HttpGet("Count/All/{formId:guid}")]
-        public async Task<SolFormSection?[]> GetByFormId(Guid formId) =>
+        public async Task<SFSection?[]> GetByFormId(Guid formId) =>
             await _service.GetSections(formId);
 
 
         //Post
         [HttpPost]
-        public async Task Create(SolFormSection section) =>
+        public async Task Create(SFSection section) =>
             await _service.CreateSection(section);
 
         [HttpPost("CreateSectionTemplte")]
@@ -37,7 +37,7 @@ namespace SolFormsApi.Controllers
 
         //Put
         [HttpPut("{id:guid}")]
-        public async Task Update(Guid id, SolFormSection section) =>
+        public async Task Update(Guid id, SFSection section) =>
             await _service.UpdateSection(id, section);
 
 

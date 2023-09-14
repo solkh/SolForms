@@ -17,6 +17,7 @@ namespace SolForms.Extentions
         public static IServiceCollection AddSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, KeyValueDataSource>();
+            services.AddScoped<SFService, SFService>();
             services.AddScoped<ISolFormsService, T>();
           
             return services;
@@ -26,6 +27,7 @@ namespace SolForms.Extentions
         public static IServiceCollection AddMultipleSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, KeyTypeValueDataSource>();
+            services.AddScoped<SFService, SFService>();
             services.AddScoped<ISolFormsService, T>();
 
             return services;
@@ -35,6 +37,7 @@ namespace SolForms.Extentions
         public static IServiceCollection AddRelationalSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
         {
             services.AddScoped<IFormsDataSource, RelationalDataSource>();
+            services.AddScoped<SFService, SFService>();
             services.AddScoped<ISolFormsService, T>();
 
             return services;
@@ -44,6 +47,7 @@ namespace SolForms.Extentions
         public static IServiceCollection AddMongoDbSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
         {                       
             services.AddScoped<IFormsDataSource, MongoDbDataSource>();
+            services.AddScoped<SFService, SFService>();
             services.AddScoped<ISolFormsService, T>();
 
             return services;
@@ -87,49 +91,49 @@ namespace SolForms.Extentions
                 .WithOne()
                 .HasForeignKey(s => s.FormId);
 
-            // SolFormSection Configuration
-            modelBuilder.Entity<SolFormSection>()
+            // SFSection Configuration
+            modelBuilder.Entity<SFSection>()
                 .ToTable("SolFormSections")
                 .HasKey(x => x.Id);
-            modelBuilder.Entity<SolFormSection>()
+            modelBuilder.Entity<SFSection>()
                 .HasMany(s => s.Questions)
                 .WithOne()
                 .HasForeignKey(q => q.SectionId);
 
-            // BaseQuestion Configuration
-            modelBuilder.Entity<BaseQuestion>()
+            // SFQuestion Configuration
+            modelBuilder.Entity<SFQuestion>()
                 .ToTable("BaseQuestions")
                 .HasKey(x => x.Id);
-            modelBuilder.Entity<BaseQuestion>()
+            modelBuilder.Entity<SFQuestion>()
                 .HasOne(q => q.ShowCondition)
                 .WithOne()
-                .HasForeignKey<ShowCondition>(sc => sc.ParentQuestionId);
-            modelBuilder.Entity<BaseQuestion>()
+                .HasForeignKey<SFShowCondition>(sc => sc.ParentQuestionId);
+            modelBuilder.Entity<SFQuestion>()
                 .HasMany(q => q.Options)
                 .WithOne()
                 .HasForeignKey(o => o.QuestionId);
 
-            // Option Configuration
-            modelBuilder.Entity<Option>()
+            // SFOption Configuration
+            modelBuilder.Entity<SFOption>()
                 .ToTable("Options")
                 .HasKey(x => x.Id);
 
-            // ShowCondition Configuration
-            modelBuilder.Entity<ShowCondition>()
+            // SFShowCondition Configuration
+            modelBuilder.Entity<SFShowCondition>()
                 .ToTable("ShowConditions")
                 .HasKey(x => x.Id);
 
-            // AnsweringSession Configuration
-            modelBuilder.Entity<AnsweringSession>()
+            // SFSubmition Configuration
+            modelBuilder.Entity<SFSubmition>()
                 .ToTable("AnsweringSessions")
                 .HasKey(x => x.Id);
-            modelBuilder.Entity<AnsweringSession>()
+            modelBuilder.Entity<SFSubmition>()
                 .HasMany(s => s.Answers)
                 .WithOne()
                 .HasForeignKey(a => a.SubmissionId);
 
-            // Answer Configuration
-            modelBuilder.Entity<Answer>()
+            // SFAnswer Configuration
+            modelBuilder.Entity<SFAnswer>()
                 .ToTable("Answers")
                 .HasKey(x => x.Id);
         }
@@ -150,7 +154,7 @@ namespace SolForms.Extentions
 //                {
 //                    option.ToJson();
 //                });
-//                question.OwnsOne(q => q.ShowCondition, showCondition =>
+//                question.OwnsOne(q => q.SFShowCondition, showCondition =>
 //                {
 //                    showCondition.ToJson();                                  
 //                    showCondition.Property(sc => sc.Type);

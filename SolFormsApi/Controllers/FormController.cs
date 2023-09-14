@@ -12,8 +12,8 @@ namespace SolFormsApi.Controllers
     public class FormController : ControllerBase
     {
         private readonly ILogger<SolForm> _logger;
-        private readonly ISolFormsService _service;
-        public FormController(ILogger<SolForm> logger, ISolFormsService service)
+        private readonly SFService _service;
+        public FormController(ILogger<SolForm> logger, SFService service)
         {
             _logger = logger;
             _service = service;

@@ -10,25 +10,27 @@ namespace SolFormsApi.Controllers
     [Route("SolForms/Submissions")]
     public class SubmissionController : ControllerBase
     {
-        private readonly ILogger<AnsweringSession> _logger;
-        private readonly ISolFormsService _service;
-        public SubmissionController(ILogger<AnsweringSession> logger, ISolFormsService service)
+        private readonly ILogger<SFSubmition> _logger;
+        private readonly SFService _service;
+        public SubmissionController(ILogger<SFSubmition> logger, SFService service)
         {
             _logger = logger;
             _service = service;
         }
         //Get
         [HttpGet("{id:guid}")]
-        public async Task<AnsweringSession?> Get(Guid id) =>
-            await _service.GetSubmission(id);
+        public async Task<SFSubmition?> Get(Guid id) =>
+            await _service.GetSubmittion(id);
 
         [HttpGet("All/{formId:guid}")]
-        public async Task<AnsweringSession?[]> GetAll(Guid formId) =>
-            await _service.GetSubmissions(formId);
+        public async Task<SFSubmition?[]> GetAll(Guid formId) =>
+            await _service.GetSubmittions(formId);
 
 
         //Post
         [HttpPost]
+        public async Task Create(SFSubmition answeringSession) =>
+            await _service.SubmitForm(answeringSession);
         public async Task Create(AnsweringSessionDto answeringSession)
         {
             var sid = Guid.NewGuid();
@@ -57,7 +59,7 @@ namespace SolFormsApi.Controllers
 
         //Put
         [HttpPut("{id:guid}")]
-        public async Task Update(Guid id, AnsweringSession answeringSession) =>
+        public async Task Update(Guid id, SFSubmition answeringSession) =>
             await _service.UpdateSubmission(id, answeringSession);
 
 

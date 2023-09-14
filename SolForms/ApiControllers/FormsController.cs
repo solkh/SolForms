@@ -9,8 +9,8 @@ namespace SolForms.ApiControllers
     //[ApiVersion("1")]
     public class FormsController : ApiController
     {
-        private readonly ISolFormsService _service;
-        public FormsController(ISolFormsService service)
+        private readonly SFService _service;
+        public FormsController(SFService service)
         {
             _service = service;
         }
@@ -31,7 +31,7 @@ namespace SolForms.ApiControllers
                 row.Add(section.FormSectionTitle.ToString());
                 row.Add(section.Id.ToString());
 
-                foreach (var question in section.Questions ?? new List<BaseQuestion>())
+                foreach (var question in section.Questions ?? new List<SFQuestion>())
                 {
                     row.Add(question.Id.ToString());
                     row.Add(question.QuestionText ?? "");
@@ -40,7 +40,7 @@ namespace SolForms.ApiControllers
                     row.Add(question.ShowCondition.OptionId.ToString() ?? Guid.Empty.ToString());
                     row.Add(question.ShowCondition.Type.ToString());
 
-                    foreach (var option in question.Options ?? new List<Option>())
+                    foreach (var option in question.Options ?? new List<SFOption>())
                     {
                         row.Add(option.Id.ToString());
                         row.Add(option.Text ?? "");
@@ -77,7 +77,7 @@ namespace SolForms.ApiControllers
         //{            
         //    var solForm = GetSolFormById(id);
         //
-        //    var csvLines = SolFormsService.FormToCsvLines(solForm);
+        //    var csvLines = SFService.FormToCsvLines(solForm);
         //
         //    var csvData = string.Join("\n", csvLines);
         //
