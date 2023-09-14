@@ -38,7 +38,8 @@ namespace SolFormsApi.Controllers
                 FormId = answeringSession.FormId,
                 UserPhone = answeringSession.UserPhone,
                 BirthDate = answeringSession.BirthDate,
-                ConsultationDate = answeringSession.ConsultationDate,                
+                ConsultationDate = answeringSession.ConsultationDate,
+                SubmitionDate = DateTime.Now,
                 UserEmail = answeringSession.UserEmail,
                 UserName = answeringSession.UserName,
                 Answers = answeringSession.Answers.Select(x => new SFAnswer { 
