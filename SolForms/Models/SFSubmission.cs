@@ -16,6 +16,7 @@ namespace SolForms.Models
         public string UserPhone { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime ConsultationDate { get; set; }
+        public bool IsRedFlag { get; set; }
         public DateTime SubmitionDate { get; set; }
         public virtual List<SFAnswer>? Answers { get; set; } = new List<SFAnswer>();
     }
