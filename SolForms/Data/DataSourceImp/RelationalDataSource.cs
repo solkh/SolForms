@@ -43,7 +43,7 @@ namespace SolForms.Data.DataSourceImp
                 EntityType.SFSection => await GetAllSectionsAsync(parentId) as TEntity[],
                 EntityType.SFQuestion => await GetAllQuestionsAsync(parentId) as TEntity[],
                 EntityType.SFOption => await GetAllOptionsAsync(parentId) as TEntity[],
-                EntityType.SFSubmission => await GetAllAnsweringSessionsAsync() as TEntity[],
+                EntityType.SFSubmission => await GetAllAnsweringSessionsAsync(parentId.Value) as TEntity[],
                 EntityType.SFAnswer => await GetAllAnswersAsync(parentId) as TEntity[],
                 _ => throw new NotImplementedException($"GetAll method not implemented for {entityType}")
             };
@@ -183,8 +183,9 @@ namespace SolForms.Data.DataSourceImp
                           .Where(x => x.QuestionId == questionId)
                           .ToArrayAsync();
 
-        private async Task<SFSubmission[]?> GetAllAnsweringSessionsAsync() =>
+        private async Task<SFSubmission[]?> GetAllAnsweringSessionsAsync(Guid formId) =>
             await _context.Set<SFSubmission>()
+                          .Where(x=>x.FormId == formId)
                           .Include(a => a.Answers)
                           .ToArrayAsync();
 
