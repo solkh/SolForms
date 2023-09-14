@@ -77,7 +77,7 @@ namespace SolFormsApi.Client.SolFormClientImp
                 return _options.Option;
             else if (typeof(TEntity) == typeof(SFShowCondition))
                 return _options.Condition;
-            else if (typeof(TEntity) == typeof(SFSubmition))
+            else if (typeof(TEntity) == typeof(SFSubmission))
                 return _options.Submissions;
             else if (typeof(TEntity) == typeof(SFAnswer))
                 return _options.Answer;

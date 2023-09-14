@@ -86,7 +86,7 @@ namespace SolForms.Data.DataSourceImp
             key = string.IsNullOrEmpty(key) ? "" : $"_{key}";
             if (typeof(TEntity) == typeof(SolForm))            
                 return _options.Forms + key;            
-            else if (typeof(TEntity) == typeof(SFSubmition))            
+            else if (typeof(TEntity) == typeof(SFSubmission))            
                 return _options.Submissions + key;            
             else if (typeof(TEntity) == typeof(SFAnswer))            
                 return _options.Submissions + key;            

@@ -9,7 +9,7 @@ namespace SolForms.Models.Questions
         public int? Order { get; set; }
         public string? QuestionText { get; set; }
         public QuestionType Type { get; set; }
-        public virtual ICollection<SFShowCondition> ShowCondition { get; set; } = new List<SFShowCondition>();
-        public virtual ICollection<SFOption>? Options { get; set; }
+        public virtual SFShowCondition ShowCondition { get; set; } = new SFShowCondition();
+        public virtual List<SFOption>? Options { get; set; }
     }
 }

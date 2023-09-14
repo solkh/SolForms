@@ -6,6 +6,6 @@
         public string FormTitle { get; set; }
         public string ShortDescrption { get; set; }
         public bool IsActive { get; set; }
-        public virtual ICollection<SFSection> FormSections { get; set; } = new List<SFSection>();
+        public virtual List<SFSection> FormSections { get; set; } = new List<SFSection>();
     }
 }

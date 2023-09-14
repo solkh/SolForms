@@ -20,19 +20,19 @@ namespace SolForms.Data.DataSourceImp
             var entityType = GetEntityType<TEntity>(); return entityType switch
             {
                 EntityType.SolForm => await GetFormAsync(id) as TEntity,
-                EntityType.SolFormSection => await GetSectionAsync(id) as TEntity,
-                EntityType.BaseQuestion => await GetQuestionAsync(id) as TEntity,
-                EntityType.Option => await GetOptionAsync(id) as TEntity,
-                EntityType.AnsweringSession => await GetAnsweringSessionAsync(id) as TEntity,
-                EntityType.Answer => await GetAnswerAsync(id) as TEntity,
-                EntityType.ShowCondition => await GetConditionAsync(id) as TEntity,
+                EntityType.SFSection => await GetSectionAsync(id) as TEntity,
+                EntityType.SFQuestion => await GetQuestionAsync(id) as TEntity,
+                EntityType.SFOption => await GetOptionAsync(id) as TEntity,
+                EntityType.SFSubmission => await GetAnsweringSessionAsync(id) as TEntity,
+                EntityType.SFAnswer => await GetAnswerAsync(id) as TEntity,
+                EntityType.SFShowCondition => await GetConditionAsync(id) as TEntity,
                 _ => throw new NotImplementedException($"Get method not implemented for {entityType}")
             };
         }
         public async Task<bool> IsRedFlag<TEntity>(Guid id) where TEntity : class
         {
-            var dbSet = _context.Set<Option>();
-            return await dbSet.Where(x => x.Id == id).Select(y => y.IsRedFlag).FirstOrDefaultAsync() ?? false;
+            var dbSet = _context.Set<SFOption>();
+            return await dbSet.Where(x => x.Id == id).Select(y => y.IsRedFlag).FirstOrDefaultAsync();
         }
         public async Task<TEntity?[]?> GetAll<TEntity>(Guid? parentId = null) where TEntity : class
         {
@@ -40,11 +40,11 @@ namespace SolForms.Data.DataSourceImp
             return entityType switch
             {
                 EntityType.SolForm => await GetAllFormsAsync() as TEntity[],
-                EntityType.SolFormSection => await GetAllSectionsAsync(parentId) as TEntity[],
-                EntityType.BaseQuestion => await GetAllQuestionsAsync(parentId) as TEntity[],
-                EntityType.Option => await GetAllOptionsAsync(parentId) as TEntity[],
-                EntityType.AnsweringSession => await GetAllAnsweringSessionsAsync() as TEntity[],
-                EntityType.Answer => await GetAllAnswersAsync(parentId) as TEntity[],
+                EntityType.SFSection => await GetAllSectionsAsync(parentId) as TEntity[],
+                EntityType.SFQuestion => await GetAllQuestionsAsync(parentId) as TEntity[],
+                EntityType.SFOption => await GetAllOptionsAsync(parentId) as TEntity[],
+                EntityType.SFSubmission => await GetAllAnsweringSessionsAsync() as TEntity[],
+                EntityType.SFAnswer => await GetAllAnswersAsync(parentId) as TEntity[],
                 _ => throw new NotImplementedException($"GetAll method not implemented for {entityType}")
             };
         }
@@ -54,12 +54,12 @@ namespace SolForms.Data.DataSourceImp
             await (entityType switch
             {
                 EntityType.SolForm => CreateFormAsync(val as SolForm ?? new SolForm()),
-                EntityType.SolFormSection => CreateSectionAsync(parentId.Value, val as SFSection ?? new SFSection()),
-                EntityType.BaseQuestion => CreateQuestionAsync(parentId.Value, val as SFQuestion ?? new SFQuestion()),
-                EntityType.Option => CreateOptionAsync(parentId.Value, val as SFOption ?? new SFOption()),
-                EntityType.ShowCondition => CreateConditionAsync(parentId.Value, val as SFShowCondition ?? new SFShowCondition()),
-                EntityType.AnsweringSession => CreateAnsweringSessionAsync(val as SFSubmition ?? new SFSubmition()),
-                EntityType.Answer => CreateAnswerAsync(parentId.Value, val as SFAnswer ?? new SFAnswer()),
+                EntityType.SFSection => CreateSectionAsync(parentId.Value, val as SFSection ?? new SFSection()),
+                EntityType.SFQuestion => CreateQuestionAsync(parentId.Value, val as SFQuestion ?? new SFQuestion()),
+                EntityType.SFOption => CreateOptionAsync(parentId.Value, val as SFOption ?? new SFOption()),
+                EntityType.SFShowCondition => CreateConditionAsync(parentId.Value, val as SFShowCondition ?? new SFShowCondition()),
+                EntityType.SFSubmission => CreateAnsweringSessionAsync(val as SFSubmission ?? new SFSubmission()),
+                EntityType.SFAnswer => CreateAnswerAsync(parentId.Value, val as SFAnswer ?? new SFAnswer()),
                 _ => throw new NotImplementedException($"Create method not implemented for {entityType}")
             });
         }
@@ -86,11 +86,11 @@ namespace SolForms.Data.DataSourceImp
             return entityType switch
             {
                 EntityType.SolForm => await DeleteAllFormsAsync(),
-                EntityType.SolFormSection => await DeleteAllSectionsAsync(parentId),
-                EntityType.BaseQuestion => await DeleteAllQuestionsAsync(parentId),
-                EntityType.Option => await DeleteAllOptionsAsync(parentId),
-                EntityType.AnsweringSession => await DeleteAllAnsweringSessionsAsync(),
-                EntityType.Answer => await DeleteAllAnswersAsync(parentId),
+                EntityType.SFSection => await DeleteAllSectionsAsync(parentId),
+                EntityType.SFQuestion => await DeleteAllQuestionsAsync(parentId),
+                EntityType.SFOption => await DeleteAllOptionsAsync(parentId),
+                EntityType.SFSubmission => await DeleteAllAnsweringSessionsAsync(),
+                EntityType.SFAnswer => await DeleteAllAnswersAsync(parentId),
                 _ => throw new NotImplementedException($"DeleteAll method not implemented for {entityType}"),
             };
         }
@@ -132,8 +132,8 @@ namespace SolForms.Data.DataSourceImp
                 .FirstOrDefaultAsync();
         private async Task<SFOption?> GetOptionAsync(Guid? id) =>
             await _context.Set<SFOption>().FirstOrDefaultAsync(x => x.Id == id);
-        private async Task<SFSubmition?> GetAnsweringSessionAsync(Guid? id) =>
-            await _context.Set<SFSubmition>()
+        private async Task<SFSubmission?> GetAnsweringSessionAsync(Guid? id) =>
+            await _context.Set<SFSubmission>()
                           .AsQueryable()
                           .AsNoTracking()
             .Where(x => x.Id == id)
@@ -183,16 +183,16 @@ namespace SolForms.Data.DataSourceImp
                           .Where(x => x.QuestionId == questionId)
                           .ToArrayAsync();
 
-        private async Task<SFSubmition[]?> GetAllAnsweringSessionsAsync() =>
-            await _context.Set<SFSubmition>()
+        private async Task<SFSubmission[]?> GetAllAnsweringSessionsAsync() =>
+            await _context.Set<SFSubmission>()
                           .Include(a => a.Answers)
                           .ToArrayAsync();
 
-        private async Task<SFAnswer[]?> GetAllAnswersAsync(Guid? sessionId) =>
+        private async Task<SFAnswer[]?> GetAllAnswersAsync(Guid? submissionId) =>
             await _context.Set<SFAnswer>()
                           .AsQueryable()
                           .AsNoTracking()
-                          .Where(x => x.SessionId == sessionId)
+                          .Where(x => x.SubmissionId == submissionId)
                           .ToArrayAsync();
 
         #endregion
@@ -233,16 +233,16 @@ namespace SolForms.Data.DataSourceImp
             await dbSet.AddAsync(condition);
             await _context.SaveChangesAsync();
         }
-        private async Task CreateAnsweringSessionAsync(SFSubmition session)
+        private async Task CreateAnsweringSessionAsync(SFSubmission session)
         {
-            var dbSet = _context.Set<SFSubmition>();
+            var dbSet = _context.Set<SFSubmission>();
             await dbSet.AddAsync(session);
             await _context.SaveChangesAsync();
         }
-        private async Task CreateAnswerAsync(Guid sessionId, SFAnswer answer)
+        private async Task CreateAnswerAsync(Guid submissionId, SFAnswer answer)
         {
             var dbSet = _context.Set<SFAnswer>();
-            answer.SessionId = sessionId;
+            answer.SubmissionId = submissionId;
             await dbSet.AddAsync(answer);
             await _context.SaveChangesAsync();
         }
@@ -279,15 +279,15 @@ namespace SolForms.Data.DataSourceImp
         }
         private async Task<bool> DeleteAllAnsweringSessionsAsync()
         {
-            var dbSet = _context.Set<SFSubmition>();
+            var dbSet = _context.Set<SFSubmission>();
             var sessions = await dbSet.ToListAsync();
             dbSet.RemoveRange(sessions);
             return await _context.SaveChangesAsync() > 1;
         }
-        private async Task<bool> DeleteAllAnswersAsync(Guid? sessionId)
+        private async Task<bool> DeleteAllAnswersAsync(Guid? submissionId)
         {
             var dbSet = _context.Set<SFAnswer>();
-            var answers = await dbSet.Where(x => x.SessionId == sessionId).ToListAsync();
+            var answers = await dbSet.Where(x => x.SubmissionId == submissionId).ToListAsync();
             dbSet.RemoveRange(answers);
             return await _context.SaveChangesAsync() > 1;
         }

@@ -37,7 +37,7 @@ namespace SolForms.Extentions
                 };
                 form.FormSections.Add(sec);
             }
-            return form.FormSections;
+            return form.FormSections.ToList();
         }
 
 
@@ -182,7 +182,7 @@ namespace SolForms.Extentions
                 };
                 question.Options.Add(op);
             }
-            return question.Options;
+            return question.Options.ToList();
         }
 
         // Conditions
@@ -337,7 +337,7 @@ namespace SolForms.Extentions
         /// <param name="userPhone"></param>
         /// <returns></returns>
         /// 
-        //public static SFSubmition CreateAnswer(SFSubmition answeringSession, params SFOption[] selectedOptions)
+        //public static SFSubmission CreateAnswer(SFSubmission answeringSession, params SFOption[] selectedOptions)
         //{
         //    if (selectedOptions is null) throw new ArgumentNullException(nameof(selectedOptions));            
         //    foreach (var option in selectedOptions)
@@ -356,9 +356,9 @@ namespace SolForms.Extentions
         //        Value = selectedOption.Text,                
         //    };
         //}
-        public static SFSubmition CreateAnsweringSession(string userName, string userEmail, string userPhone)
+        public static SFSubmission CreateAnsweringSession(string userName, string userEmail, string userPhone)
         {
-            return new SFSubmition()
+            return new SFSubmission()
             {
                 Id = Guid.NewGuid(),
                 UserEmail = userEmail,
@@ -384,7 +384,7 @@ namespace SolForms.Extentions
             }
             return answer;
         }
-        public static SFSubmition AddAnswer(this SFSubmition answeringSession, params SFAnswer[] answers)
+        public static SFSubmission AddAnswer(this SFSubmission answeringSession, params SFAnswer[] answers)
         {
             if (answeringSession == null) throw new ArgumentNullException(nameof(answeringSession));
             if (answeringSession.Answers == null) answeringSession.Answers = new List<SFAnswer>();
@@ -395,7 +395,7 @@ namespace SolForms.Extentions
             }
             return answeringSession;
         }
-        public static SFSubmition AddAnsweringSession(this SolForm form, SFSubmition answeringSession)
+        public static SFSubmission AddAnsweringSession(this SolForm form, SFSubmission answeringSession)
         {
             answeringSession.FormId = form.Id;
             return answeringSession;

@@ -30,7 +30,8 @@ namespace SolForms.Services
         Task CreateQuestion(SFQuestion question);
         Task UpdateQuestion(SFQuestion question);
         Task UpdateQuestion(Guid id, SFQuestion question);
-        Task<bool> DeleteQuestion(Guid questionId);        
+        Task<bool> DeleteQuestion(Guid questionId);
+        Task<QuestionType> GetQuestionTypeById(Guid questionId);
 
         //Conditions        
         Task<SFShowCondition?> GetCondtion(Guid conditionId);           
@@ -42,20 +43,19 @@ namespace SolForms.Services
         //Options
         Task<SFOption?> GetOption(Guid optionId);
         Task<SFOption?[]> GetOptions(Guid questionId);
-        Task<bool> IsRedFlag(Guid optionId);
         Task CreateOption(SFOption option);
         Task UpdateOption(SFOption option);
         Task UpdateOption(Guid id, SFOption option);
         Task<bool> DeleteOption(Guid OptionId);
 
-        //Submittions
-        Task<SFSubmition?> GetSubmittion(Guid sessionId);
-        Task<SFSubmition?[]> GetSubmittions(Guid formId);
-        Task SubmitForm(SFSubmition answeringSession);
-        Task UpdateSubmission(SFSubmition answeringSession);
-        Task UpdateSubmission(Guid id, SFSubmition answeringSession);
-        Task<bool> DeleteSubmittion(Guid sessionId); 
-        Task<int> CountSubmittions(Guid formId);        
+        //Submissions
+        Task<SFSubmission?> GetSubmission(Guid sessionId);
+        Task<SFSubmission?[]> GetSubmissions(Guid formId);
+        Task SubmitForm(SFSubmission answeringSession);
+        Task UpdateSubmission(SFSubmission answeringSession);
+        Task UpdateSubmission(Guid id, SFSubmission answeringSession);
+        Task<bool> DeleteSubmission(Guid sessionId); 
+        Task<int> CountSubmissions(Guid formId);        
 
         //Answers
         Task<SFAnswer?> GetAnswer(Guid sessionId);
@@ -71,7 +71,7 @@ namespace SolForms.Services
 // Laterrrrrrrrrrrrr: Set Expiry Date
 // Laterrrrrrrrrrrrr: Get Marks
 // Get Histogram Answers of A question
-// GetSubmittions as CSV? 
+// GetSubmissions as CSV? 
 // Get Time Histogram <day1:55><day2:22> ....
 // Should Show Question
 

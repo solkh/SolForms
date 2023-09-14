@@ -9,18 +9,18 @@ namespace SolFormsApi.Extentions
     {
         // AddSolForms
         public static IServiceCollection AddSolFormsApi(this IServiceCollection services)=>
-            services.AddSolFormsApi<SolFormsService>();
+            services.AddSolFormsApi<SFService>();
 
-        public static IServiceCollection AddSolFormsApi<T>(this IServiceCollection services) where T :  class, ISolFormsService
+        public static IServiceCollection AddSolFormsApi<T>(this IServiceCollection services) where T :  class, ISFService
         {
             services.AddScoped<IFormsDataSource, KeyValueDataSource>();
-            services.AddScoped<SFService, SFService>();
+            services.AddScoped<ISFService, SFService>();
           
             return services;
         }
         public static IServiceCollection AddMultipleSolFormsApi(this IServiceCollection services) =>
-            services.AddMultipleSolFormsApi<SolFormsService>();
-        public static IServiceCollection AddMultipleSolFormsApi<T>(this IServiceCollection services) where T : class, ISolFormsService
+            services.AddMultipleSolFormsApi<SFService>();
+        public static IServiceCollection AddMultipleSolFormsApi<T>(this IServiceCollection services) where T : class, ISFService
         {
             services.AddScoped<IFormsDataSource, KeyTypeValueDataSource>();
             services.AddScoped<SFService, SFService>();
@@ -28,8 +28,8 @@ namespace SolFormsApi.Extentions
             return services;
         }
         public static IServiceCollection AddRelationalSolFormsApi(this IServiceCollection services) =>
-            services.AddMultipleSolFormsApi<SolFormsService>();
-        public static IServiceCollection AddRelationalSolFormsApi<T>(this IServiceCollection services) where T : class, ISolFormsService
+            services.AddMultipleSolFormsApi<SFService>();
+        public static IServiceCollection AddRelationalSolFormsApi<T>(this IServiceCollection services) where T : class, ISFService
         {
             services.AddScoped<IFormsDataSource, RelationalDataSource>();
             services.AddScoped<SFService, SFService>();

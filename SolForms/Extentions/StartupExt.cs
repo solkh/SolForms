@@ -13,42 +13,42 @@ namespace SolForms.Extentions
     {
         // AddSolForms
         public static IServiceCollection AddSolForms(this IServiceCollection services) =>
-            services.AddSolForms<SolFormsService>();
-        public static IServiceCollection AddSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
+            services.AddSolForms<SFService>();
+        public static IServiceCollection AddSolForms<T>(this IServiceCollection services) where T : class, ISFService
         {
             services.AddScoped<IFormsDataSource, KeyValueDataSource>();
             services.AddScoped<SFService, SFService>();
-            services.AddScoped<ISolFormsService, T>();
+            services.AddScoped<ISFService, T>();
           
             return services;
         }
         public static IServiceCollection AddMultipleSolForms(this IServiceCollection services) =>
-           services.AddMultipleSolForms<SolFormsService>();
-        public static IServiceCollection AddMultipleSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
+           services.AddMultipleSolForms<SFService>();
+        public static IServiceCollection AddMultipleSolForms<T>(this IServiceCollection services) where T : class, ISFService
         {
             services.AddScoped<IFormsDataSource, KeyTypeValueDataSource>();
             services.AddScoped<SFService, SFService>();
-            services.AddScoped<ISolFormsService, T>();
+            services.AddScoped<ISFService, T>();
 
             return services;
         }
         public static IServiceCollection AddRelationalSolForms(this IServiceCollection services) =>
-            services.AddRelationalSolForms<SolFormsService>();
-        public static IServiceCollection AddRelationalSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
+            services.AddRelationalSolForms<SFService>();
+        public static IServiceCollection AddRelationalSolForms<T>(this IServiceCollection services) where T : class, ISFService
         {
             services.AddScoped<IFormsDataSource, RelationalDataSource>();
             services.AddScoped<SFService, SFService>();
-            services.AddScoped<ISolFormsService, T>();
+            services.AddScoped<ISFService, T>();
 
             return services;
         }
         public static IServiceCollection AddMongoDbSolForms(this IServiceCollection services) =>
-            services.AddMongoDbSolForms<SolFormsService>();
-        public static IServiceCollection AddMongoDbSolForms<T>(this IServiceCollection services) where T : class, ISolFormsService
+            services.AddMongoDbSolForms<SFService>();
+        public static IServiceCollection AddMongoDbSolForms<T>(this IServiceCollection services) where T : class, ISFService
         {                       
             services.AddScoped<IFormsDataSource, MongoDbDataSource>();
             services.AddScoped<SFService, SFService>();
-            services.AddScoped<ISolFormsService, T>();
+            services.AddScoped<ISFService, T>();
 
             return services;
         }
@@ -123,11 +123,11 @@ namespace SolForms.Extentions
                 .ToTable("ShowConditions")
                 .HasKey(x => x.Id);
 
-            // SFSubmition Configuration
-            modelBuilder.Entity<SFSubmition>()
+            // SFSubmission Configuration
+            modelBuilder.Entity<SFSubmission>()
                 .ToTable("AnsweringSessions")
                 .HasKey(x => x.Id);
-            modelBuilder.Entity<SFSubmition>()
+            modelBuilder.Entity<SFSubmission>()
                 .HasMany(s => s.Answers)
                 .WithOne()
                 .HasForeignKey(a => a.SubmissionId);

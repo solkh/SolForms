@@ -12,7 +12,8 @@ namespace SolForms.Models
         public Guid Id { get; set; }
         public Guid FormId { get; set; }
         public string FormSectionTitle { get; set; }
+        public string FormSectionDescription { get; set; }
         public int? Order { get; set; }
-        public virtual ICollection<SFQuestion>? Questions { get; set; } = new List<SFQuestion>();
+        public virtual List<SFQuestion>? Questions { get; set; } = new List<SFQuestion>();
     }
 }

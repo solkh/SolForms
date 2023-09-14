@@ -10,31 +10,29 @@ namespace SolFormsApi.Controllers
     [Route("SolForms/Submissions")]
     public class SubmissionController : ControllerBase
     {
-        private readonly ILogger<SFSubmition> _logger;
+        private readonly ILogger<SFSubmission> _logger;
         private readonly SFService _service;
-        public SubmissionController(ILogger<SFSubmition> logger, SFService service)
+        public SubmissionController(ILogger<SFSubmission> logger, SFService service)
         {
             _logger = logger;
             _service = service;
         }
         //Get
         [HttpGet("{id:guid}")]
-        public async Task<SFSubmition?> Get(Guid id) =>
-            await _service.GetSubmittion(id);
+        public async Task<SFSubmission?> Get(Guid id) =>
+            await _service.GetSubmission(id);
 
         [HttpGet("All/{formId:guid}")]
-        public async Task<SFSubmition?[]> GetAll(Guid formId) =>
-            await _service.GetSubmittions(formId);
+        public async Task<SFSubmission?[]> GetAll(Guid formId) =>
+            await _service.GetSubmissions(formId);
 
 
         //Post
         [HttpPost]
-        public async Task Create(SFSubmition answeringSession) =>
-            await _service.SubmitForm(answeringSession);
-        public async Task Create(AnsweringSessionDto answeringSession)
+        public async Task Create(SFSubmitionDto answeringSession)
         {
             var sid = Guid.NewGuid();
-            var answers = new AnsweringSession()
+            var answers = new SFSubmission()
             {
                 Id = sid,
                 FormId = answeringSession.FormId,
@@ -43,7 +41,11 @@ namespace SolFormsApi.Controllers
                 ConsultationDate = answeringSession.ConsultationDate,                
                 UserEmail = answeringSession.UserEmail,
                 UserName = answeringSession.UserName,
-                Answers = answeringSession.Answers.Select(x => new Answer { SubmissionId = sid, QuestionId = x.QuestionId ?? Guid.Empty, Value = x.Value }).ToList(),
+                Answers = answeringSession.Answers.Select(x => new SFAnswer { 
+                    SubmissionId = sid, 
+                    QuestionId = x.QuestionId ?? Guid.Empty,
+                    Value = x.Value
+                }).ToList(),
             };
             foreach (var answer in answers.Answers)
             {                
@@ -59,14 +61,14 @@ namespace SolFormsApi.Controllers
 
         //Put
         [HttpPut("{id:guid}")]
-        public async Task Update(Guid id, SFSubmition answeringSession) =>
+        public async Task Update(Guid id, SFSubmission answeringSession) =>
             await _service.UpdateSubmission(id, answeringSession);
 
 
         //Delete
         [HttpDelete("Delete/{id:guid}")]
         public async Task<bool> Delete(Guid id) =>
-            await _service.DeleteSubmittion(id);
+            await _service.DeleteSubmission(id);
 
     }
 }

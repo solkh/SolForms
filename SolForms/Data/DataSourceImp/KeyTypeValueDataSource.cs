@@ -24,12 +24,12 @@ namespace SolForms.Data.DataSourceImp
             return entityType switch
             {
                 EntityType.SolForm => await GetFormAsync(id) as TEntity,
-                EntityType.SolFormSection => await GetSectionAsync(id) as TEntity,
-                EntityType.BaseQuestion => await GetQuestionAsync(id) as TEntity,
-                EntityType.Option => await GetOptionAsync(id) as TEntity,
-                EntityType.ShowCondition => await GetConditionAsync(id) as TEntity,
-                EntityType.AnsweringSession => await GetAnsweringSessionAsync(id) as TEntity,
-                EntityType.Answer => await GetAnswerAsync(id) as TEntity,
+                EntityType.SFSection => await GetSectionAsync(id) as TEntity,
+                EntityType.SFQuestion => await GetQuestionAsync(id) as TEntity,
+                EntityType.SFOption => await GetOptionAsync(id) as TEntity,
+                EntityType.SFShowCondition => await GetConditionAsync(id) as TEntity,
+                EntityType.SFSubmission => await GetAnsweringSessionAsync(id) as TEntity,
+                EntityType.SFAnswer => await GetAnswerAsync(id) as TEntity,
                 _ => default,
             };
         }
@@ -39,19 +39,19 @@ namespace SolForms.Data.DataSourceImp
             return entityType switch
             {
                 EntityType.SolForm => await GetAllFormsAsync() as TEntity[],
-                EntityType.SolFormSection => await GetAllSectionsAsync(id) as TEntity[],
-                EntityType.BaseQuestion => await GetAllQuestionsAsync(id) as TEntity[],
-                EntityType.Option => await GetAllOptionsAsync(id) as TEntity[],
-                EntityType.ShowCondition => await GetAllConditionsAsync(id) as TEntity[],
-                EntityType.AnsweringSession => await GetAllAnsweringSessionsAsync() as TEntity[],
-                EntityType.Answer => await GetAllAnswersAsync(id) as TEntity[],
+                EntityType.SFSection => await GetAllSectionsAsync(id) as TEntity[],
+                EntityType.SFQuestion => await GetAllQuestionsAsync(id) as TEntity[],
+                EntityType.SFOption => await GetAllOptionsAsync(id) as TEntity[],
+                EntityType.SFShowCondition => await GetAllConditionsAsync(id) as TEntity[],
+                EntityType.SFSubmission => await GetAllAnsweringSessionsAsync() as TEntity[],
+                EntityType.SFAnswer => await GetAllAnswersAsync(id) as TEntity[],
                 _ => Array.Empty<TEntity>(),
             };
         }
         public async Task<int> Count<TEntity>() where TEntity : class
         {
             var type = GetEntityType<TEntity>();
-            if (type == EntityType.SolForm || type == EntityType.AnsweringSession)            
+            if (type == EntityType.SolForm || type == EntityType.SFSubmission)            
                 return await _dbSet.CountAsync(x => x.EntityType == type);            
             else           
                 throw new NotImplementedException($"Create method not implemented for {type}");            
@@ -62,12 +62,12 @@ namespace SolForms.Data.DataSourceImp
             await (entityType switch
             {
                 EntityType.SolForm => CreateFormAsync(val as SolForm ?? new SolForm()),
-                EntityType.SolFormSection => CreateSectionAsync(val as SFSection ?? new SFSection(), parentId.Value),
-                EntityType.BaseQuestion => CreateQuestionAsync(val as SFQuestion ?? new SFQuestion(), parentId.Value),
-                EntityType.Option => CreateOptionAsync(val as SFOption ?? new SFOption(), parentId.Value),
-                EntityType.ShowCondition => CreateConditionAsync(val as SFShowCondition ?? new SFShowCondition(), parentId.Value),
-                EntityType.AnsweringSession => CreateAnsweringSessionAsync(val as SFSubmition ?? new SFSubmition()),
-                EntityType.Answer => CreateAnswerAsync(val as SFAnswer ?? new SFAnswer(), parentId.Value),
+                EntityType.SFSection => CreateSectionAsync(val as SFSection ?? new SFSection(), parentId.Value),
+                EntityType.SFQuestion => CreateQuestionAsync(val as SFQuestion ?? new SFQuestion(), parentId.Value),
+                EntityType.SFOption => CreateOptionAsync(val as SFOption ?? new SFOption(), parentId.Value),
+                EntityType.SFShowCondition => CreateConditionAsync(val as SFShowCondition ?? new SFShowCondition(), parentId.Value),
+                EntityType.SFSubmission => CreateAnsweringSessionAsync(val as SFSubmission ?? new SFSubmission()),
+                EntityType.SFAnswer => CreateAnswerAsync(val as SFAnswer ?? new SFAnswer(), parentId.Value),
                 _ => throw new NotImplementedException($"Create method not implemented for {entityType}")
             });
         }
@@ -79,22 +79,22 @@ namespace SolForms.Data.DataSourceImp
                 case EntityType.SolForm:
                     await UpdateFormAsync(id, val as SolForm ?? new SolForm());
                     break;
-                case EntityType.SolFormSection:
+                case EntityType.SFSection:
                     await UpdateSectionAsync(id, val as SFSection ?? new SFSection());
                     break;
-                case EntityType.BaseQuestion:
+                case EntityType.SFQuestion:
                     await UpdateQuestionAsync(id, val as SFQuestion ?? new SFQuestion());
                     break;
-                case EntityType.Option:
+                case EntityType.SFOption:
                     await UpdateOptionAsync(id, val as SFOption ?? new SFOption());
                     break;
-                case EntityType.ShowCondition:
+                case EntityType.SFShowCondition:
                     await UpdateConditionAsync(id, val as SFShowCondition ?? new SFShowCondition());
                     break;
-                case EntityType.AnsweringSession:
-                    await UpdateAnsweringSessionAsync(id, val as SFSubmition ?? new SFSubmition());
+                case EntityType.SFSubmission:
+                    await UpdateAnsweringSessionAsync(id, val as SFSubmission ?? new SFSubmission());
                     break;
-                case EntityType.Answer:
+                case EntityType.SFAnswer:
                     await UpdateAnswerAsync(id, val as SFAnswer ?? new SFAnswer());
                     break;
                 default:
@@ -107,12 +107,12 @@ namespace SolForms.Data.DataSourceImp
             return entityType switch
             {
                 EntityType.SolForm => await DeleteFormAsync(id),
-                EntityType.SolFormSection => await DeleteSectionAsync(id),
-                EntityType.BaseQuestion => await DeleteQuestionAsync(id),
-                EntityType.Option => await DeleteOptionAsync(id),
-                EntityType.ShowCondition => await DeleteConditionAsync(id),
-                EntityType.AnsweringSession => await DeleteAnsweringSessionAsync(id),
-                EntityType.Answer => await DeleteAnswerAsync(id),
+                EntityType.SFSection => await DeleteSectionAsync(id),
+                EntityType.SFQuestion => await DeleteQuestionAsync(id),
+                EntityType.SFOption => await DeleteOptionAsync(id),
+                EntityType.SFShowCondition => await DeleteConditionAsync(id),
+                EntityType.SFSubmission => await DeleteAnsweringSessionAsync(id),
+                EntityType.SFAnswer => await DeleteAnswerAsync(id),
                 _ => false,
             };
         }
@@ -122,12 +122,12 @@ namespace SolForms.Data.DataSourceImp
             return entityType switch
             {
                 EntityType.SolForm => await DeleteAllFormsAsync(),
-                EntityType.SolFormSection => await DeleteAllSectionsAsync(id),
-                EntityType.BaseQuestion => await DeleteAllQuestionsAsync(id),
-                EntityType.Option => await DeleteAllOptionsAsync(id),
-                EntityType.ShowCondition => await DeleteAllConditionsAsync(id),
-                EntityType.AnsweringSession => await DeleteAllAnsweringSessionsAsync(),
-                EntityType.Answer => await DeleteAllAnswersAsync(id),
+                EntityType.SFSection => await DeleteAllSectionsAsync(id),
+                EntityType.SFQuestion => await DeleteAllQuestionsAsync(id),
+                EntityType.SFOption => await DeleteAllOptionsAsync(id),
+                EntityType.SFShowCondition => await DeleteAllConditionsAsync(id),
+                EntityType.SFSubmission => await DeleteAllAnsweringSessionsAsync(),
+                EntityType.SFAnswer => await DeleteAllAnswersAsync(id),
                 _ => false,
             };
         }
@@ -202,19 +202,19 @@ namespace SolForms.Data.DataSourceImp
             }
             return default;
         }
-        private async Task<SFSubmition?> GetAnsweringSessionAsync(Guid key)
+        private async Task<SFSubmission?> GetAnsweringSessionAsync(Guid key)
         {
-            var submission = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.AnsweringSession && x.Id == key);
+            var submission = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.SFSubmission && x.Id == key);
             if (submission != null)
-                return JsonSerializer.Deserialize<SFSubmition>(submission.Value);
+                return JsonSerializer.Deserialize<SFSubmission>(submission.Value);
             return default;
         }
         private async Task<SFAnswer?> GetAnswerAsync(Guid key)
         {
-            var submissions = await _dbSet.Where(x => x.EntityType == EntityType.AnsweringSession).ToListAsync();
+            var submissions = await _dbSet.Where(x => x.EntityType == EntityType.SFSubmission).ToListAsync();
             foreach (var submission in submissions)
             {
-                var data = JsonSerializer.Deserialize<SFSubmition>(submission.Value);
+                var data = JsonSerializer.Deserialize<SFSubmission>(submission.Value);
                 if (data != null)
                     foreach (var answer in data.Answers ?? new List<SFAnswer>())
                         if (answer.Id == key)
@@ -285,13 +285,13 @@ namespace SolForms.Data.DataSourceImp
             }
             return Array.Empty<SFShowCondition>();
         }
-        private async Task<SFSubmition[]?> GetAllAnsweringSessionsAsync()
+        private async Task<SFSubmission[]?> GetAllAnsweringSessionsAsync()
         {
-            var result = new List<SFSubmition>();
-            var submissions = await _dbSet.Where(x => x.EntityType == EntityType.AnsweringSession).ToArrayAsync();
+            var result = new List<SFSubmission>();
+            var submissions = await _dbSet.Where(x => x.EntityType == EntityType.SFSubmission).ToArrayAsync();
             foreach (var submission in submissions)
             {
-                var data = JsonSerializer.Deserialize<SFSubmition>(submission.Value);
+                var data = JsonSerializer.Deserialize<SFSubmission>(submission.Value);
                 if (data != null)
                     result.Add(data);
             }
@@ -299,10 +299,10 @@ namespace SolForms.Data.DataSourceImp
         }
         private async Task<SFAnswer[]?> GetAllAnswersAsync(Guid? sessionId)
         {
-            var submission = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.AnsweringSession && x.Id == sessionId);
+            var submission = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.SFSubmission && x.Id == sessionId);
             if (submission != null)
             {
-                return JsonSerializer.Deserialize<SFSubmition>(submission.Value)?.Answers?.ToArray();
+                return JsonSerializer.Deserialize<SFSubmission>(submission.Value)?.Answers?.ToArray();
             }
 
             return Array.Empty<SFAnswer>();
@@ -394,13 +394,13 @@ namespace SolForms.Data.DataSourceImp
                 }
             }
         }
-        private async Task CreateAnsweringSessionAsync(SFSubmition answeringSession)
+        private async Task CreateAnsweringSessionAsync(SFSubmission answeringSession)
         {
             var result = JsonSerializer.Serialize(answeringSession);
             var newAnsweringSession = new FormsKeyTypeValue
             {
                 Id = Guid.NewGuid(),
-                EntityType = EntityType.AnsweringSession,
+                EntityType = EntityType.SFSubmission,
                 Value = result
             };
             await _dbSet.AddAsync(newAnsweringSession);
@@ -408,10 +408,10 @@ namespace SolForms.Data.DataSourceImp
         }
         private async Task CreateAnswerAsync(SFAnswer answer, Guid answeringSessionId)
         {
-            var session = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.AnsweringSession && x.Id == answeringSessionId);
+            var session = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.SFSubmission && x.Id == answeringSessionId);
             if (session == null) throw new Exception("Answering Session not found.");
 
-            var sessionData = JsonSerializer.Deserialize<SFSubmition>(session.Value);
+            var sessionData = JsonSerializer.Deserialize<SFSubmission>(session.Value);
             if (sessionData?.Answers == null) sessionData.Answers = new List<SFAnswer>();
             sessionData?.Answers?.Add(answer);
 
@@ -520,10 +520,10 @@ namespace SolForms.Data.DataSourceImp
                     }
             }
         }
-        private async Task UpdateAnsweringSessionAsync(Guid id, SFSubmition answeringSession)
+        private async Task UpdateAnsweringSessionAsync(Guid id, SFSubmission answeringSession)
         {
             var result = JsonSerializer.Serialize(answeringSession);
-            var data = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.AnsweringSession && x.Id == id);
+            var data = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.SFSubmission && x.Id == id);
             if (data != null)
             {
                 data.Value = result;
@@ -533,10 +533,10 @@ namespace SolForms.Data.DataSourceImp
         }
         private async Task UpdateAnswerAsync(Guid id, SFAnswer answer)
         {
-            var sessions = await _dbSet.Where(x => x.EntityType == EntityType.AnsweringSession).ToListAsync();
+            var sessions = await _dbSet.Where(x => x.EntityType == EntityType.SFSubmission).ToListAsync();
             foreach (var session in sessions)
             {
-                var sessionData = JsonSerializer.Deserialize<SFSubmition>(session.Value);
+                var sessionData = JsonSerializer.Deserialize<SFSubmission>(session.Value);
                 if (sessionData != null)
                 {
                     for (int i = 0; i < sessionData?.Answers?.Count; i++)
@@ -646,7 +646,7 @@ namespace SolForms.Data.DataSourceImp
         }
         private async Task<bool> DeleteAnsweringSessionAsync(Guid? key)
         {
-            var submission = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.AnsweringSession && x.Id == key);
+            var submission = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.SFSubmission && x.Id == key);
             if (submission != null)
             {
                 _dbSet.Remove(submission);
@@ -656,10 +656,10 @@ namespace SolForms.Data.DataSourceImp
         }
         private async Task<bool> DeleteAnswerAsync(Guid? key)
         {
-            var submissions = await _dbSet.Where(x => x.EntityType == EntityType.AnsweringSession).ToListAsync();
+            var submissions = await _dbSet.Where(x => x.EntityType == EntityType.SFSubmission).ToListAsync();
             foreach (var submission in submissions)
             {
-                var data = JsonSerializer.Deserialize<SFSubmition>(submission.Value);
+                var data = JsonSerializer.Deserialize<SFSubmission>(submission.Value);
                 if (data != null)
                 {
                     foreach (var answer in data.Answers ?? new List<SFAnswer>())
@@ -744,7 +744,7 @@ namespace SolForms.Data.DataSourceImp
         }
         private async Task<bool> DeleteAllAnsweringSessionsAsync()
         {
-            var submissions = await _dbSet.Where(x => x.EntityType == EntityType.AnsweringSession).ToListAsync();
+            var submissions = await _dbSet.Where(x => x.EntityType == EntityType.SFSubmission).ToListAsync();
             if (submissions != null)
             {
                 _dbSet.RemoveRange(submissions);
@@ -754,10 +754,10 @@ namespace SolForms.Data.DataSourceImp
         }
         private async Task<bool> DeleteAllAnswersAsync(Guid? sessionId)
         {
-            var submission = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.AnsweringSession && x.Id == sessionId);
+            var submission = await _dbSet.FirstOrDefaultAsync(x => x.EntityType == EntityType.SFSubmission && x.Id == sessionId);
             if (submission != null)
             {
-                var data = JsonSerializer.Deserialize<SFSubmition>(submission.Value);
+                var data = JsonSerializer.Deserialize<SFSubmission>(submission.Value);
                 if (data != null)
                 {
                     data?.Answers?.RemoveAll(x => x.SubmissionId == sessionId);

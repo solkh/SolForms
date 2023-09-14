@@ -19,11 +19,11 @@ namespace SolForms.Data
     public enum EntityType
     {
         SolForm = 0,        
-        SolFormSection = 1,
-        BaseQuestion = 2,
-        Option = 3,
-        ShowCondition = 4,
-        AnsweringSession = 5,
-        Answer = 6,
+        SFSection = 1,
+        SFQuestion = 2,
+        SFOption = 3,
+        SFShowCondition = 4,
+        SFSubmission = 5,
+        SFAnswer = 6,
     }
 }

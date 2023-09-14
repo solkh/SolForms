@@ -9,6 +9,6 @@
         public string Condition { get; set; } = "Condition";
         public string Option { get; set; } = "Option";
         public string Answer { get; set; } = "Answer";
-        public string Submissions { get; set; } = "Submittions";        
+        public string Submissions { get; set; } = "Submissions";        
     }
 }
