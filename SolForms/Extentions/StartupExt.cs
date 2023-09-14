@@ -130,7 +130,8 @@ namespace SolForms.Extentions
             modelBuilder.Entity<SFSubmission>()
                 .HasMany(s => s.Answers)
                 .WithOne()
-                .HasForeignKey(a => a.SubmissionId);
+                .HasForeignKey(a => a.SubmissionId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // SFAnswer Configuration
             modelBuilder.Entity<SFAnswer>()
