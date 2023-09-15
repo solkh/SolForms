@@ -1,10 +1,12 @@
 ﻿using SolForms.Models.Enums;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace SolForms.Models.Questions
 {
     public record SFAnswer
     {
+        [JsonIgnore]
         public Guid? Id { get; set; }
         public Guid? SubmissionId { get; set; }
         public Guid QuestionId { get; set; }        
